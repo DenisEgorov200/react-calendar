@@ -1,13 +1,8 @@
-$primaryColor: #050510;
-$secondaryColor: #c3c3c6;
-$tetriaryColor: #97979b;
-$activePrimaryColor: #6534ff;
-$errorColor: #f44336;
-$bgSecondary: #f7f7f8;
+$primaryColor: #5e5e5e;
+$secondaryColor: #d9d9d9;
+$activeColor: #2ca1ff;
 $whiteColor: #fff;
 $blackColor: #000;
-
-$mainFont: 'Inter', sans-serif;
 
 $mobile-width: 768px;
 $tablet-width: 1024px;
@@ -20,16 +15,4 @@ $tablet-width: 1024px;
   max-width: 1300px;
   padding: 0 16px;
   margin: 0 auto;
-}
-
-.btn {
-  display: inline-block;
-
-  font-family: $mainFont;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 20px;
-  text-align: center;
-  color: #6534ff;
 }

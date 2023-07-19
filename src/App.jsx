@@ -1,9 +1,11 @@
+import { Header } from 'components/Header/Header.jsx';
+
 import styles from './App.module.scss';
 
 function App() {
   return (
     <div className={styles.wrapper}>
-      <h1>hello</h1>
+      <Header />
     </div>
   );
 }
