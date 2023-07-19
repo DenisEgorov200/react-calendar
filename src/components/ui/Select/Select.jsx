@@ -5,8 +5,8 @@ import clsx from 'clsx';
 import arrow from 'assets/icon/arrow.svg';
 import styles from './Select.module.scss';
 
-export const Select = ({ className, isActive, setIsActive, items }) => {
-  const [activeSelect, setActiveSelect] = useState(2018);
+export const Select = ({ selectedItem, className, isActive, setIsActive, items }) => {
+  const [activeSelect, setActiveSelect] = useState(selectedItem);
   const selectRef = useRef(null);
   useOnClickOutside(selectRef, () => setIsActive(false));
 

@@ -5,22 +5,39 @@ import { Select } from 'components/ui/Select/Select.jsx';
 
 import styles from './Header.module.scss';
 
-const yearArray = ['2018', '2019', '2020', '2021'];
-
 export const Header = () => {
-  const [isActive, setIsActive] = useState(false);
+  const date = new Date();
+  const currentYear = date.getFullYear();
+  const currentMonth = date.toLocaleString('default', { month: 'long' });
+
+  const months = Array.from({ length: 12 }, (_, index) => {
+    date.setMonth(index);
+
+    return date.toLocaleString('default', { month: 'long' }).slice(0, 3);
+  });
+
+  const years = Array.from({ length: 20 }, (_, index) => currentYear - 10 + index);
+
+  const [isActiveYears, setIsActiveYears] = useState(false);
+  const [isActiveMonths, setIsActiveMonths] = useState(false);
 
   return (
     <header className={styles.header}>
       <div className={clsx(styles.headerContainer, styles.container)}>
-        {}
         <Select
+          selectedItem={currentYear}
           className={styles.headerSelect}
-          isActive={isActive}
-          setIsActive={setIsActive}
-          items={yearArray}
+          isActive={isActiveYears}
+          setIsActive={setIsActiveYears}
+          items={years}
         />
-        {/*<Select className={styles.headerSelect} isActive={isActive} setIsActive={setIsActive} />*/}
+        <Select
+          selectedItem={currentMonth}
+          className={styles.headerSelect}
+          isActive={isActiveMonths}
+          setIsActive={setIsActiveMonths}
+          items={months}
+        />
       </div>
     </header>
   );
