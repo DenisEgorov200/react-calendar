@@ -1,0 +1,14 @@
+@use 'scss' as *;
+
+.header {
+  &Container {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &Select {
+    &:not(:last-child) {
+      margin: 0 10px 0 0;
+    }
+  }
+}

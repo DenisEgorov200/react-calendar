@@ -1,31 +1,33 @@
-import { useRef } from 'react';
-
+import { useRef, useState } from 'react';
+import { useOnClickOutside } from '@/hooks/useOnClickOutside.js';
 import clsx from 'clsx';
+
 import arrow from 'assets/icon/arrow.svg';
 import styles from './Select.module.scss';
-import { useOnClickOutside } from '@/hooks/useOnClickOutside.js';
 
-export const Select = ({ isActive, setIsActive }) => {
+export const Select = ({ className, isActive, setIsActive, items }) => {
+  const [activeSelect, setActiveSelect] = useState(2018);
   const selectRef = useRef(null);
-  useOnClickOutside(selectRef, setIsActive);
+  useOnClickOutside(selectRef, () => setIsActive(false));
+
+  const onClickSelect = (year) => {
+    setActiveSelect(year);
+    setIsActive(false);
+  };
 
   return (
-    <div className={clsx(styles.select, { [styles.active]: isActive })} ref={selectRef}>
+    <div className={clsx(styles.select, className, { [styles.active]: isActive })} ref={selectRef}>
       <div className={styles.selectBtn} onClick={() => setIsActive(!isActive)}>
-        <span>2021</span>
+        <span>{activeSelect}</span>
         <img className={styles.selectIcon} src={arrow} alt="arrow" />
       </div>
       {isActive && (
         <ul className={styles.selectContent}>
-          <li className={styles.selectOption}>2016</li>
-          <li className={styles.selectOption}>2017</li>
-          <li className={styles.selectOption}>2018</li>
-          <li className={styles.selectOption}>2019</li>
-          <li className={styles.selectOption}>2018</li>
-          <li className={styles.selectOption}>2019</li>
-          <li className={styles.selectOption}>2018</li>
-          <li className={styles.selectOption}>2019</li>
-          <li className={styles.selectOption}>2020</li>
+          {items.map((year) => (
+            <li key={year} className={styles.selectOption} onClick={() => onClickSelect(year)}>
+              {year}
+            </li>
+          ))}
         </ul>
       )}
     </div>
