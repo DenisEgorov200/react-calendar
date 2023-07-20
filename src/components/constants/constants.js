@@ -1,6 +1,7 @@
 const date = new Date();
 const currentYear = date.getFullYear();
 
+export const weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 export const months = [
   'Jan',
   'Feb',
