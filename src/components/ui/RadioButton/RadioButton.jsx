@@ -1,16 +1,20 @@
-import styles from './RadioButton.module.scss';
 import { useState } from 'react';
 import clsx from 'clsx';
 
-const radioItems = ['month', 'year'];
+import styles from './RadioButton.module.scss';
 
-export const RadioButton = () => {
+export const RadioButton = ({ radioItems }) => {
   const [selectedRadioBtn, setSelectedRadioBtn] = useState('');
   const isRadioSelected = (value) => selectedRadioBtn === value;
 
+  const onChangeInput = (item) => {
+    setSelectedRadioBtn(item);
+    console.log(item);
+  };
+
   return (
     <div className={styles.radio}>
-      {radioItems.map((item, index) => (
+      {radioItems.map((item) => (
         <label
           key={item}
           className={clsx(styles.radioLabel, { [styles.active]: isRadioSelected(item) })}>
@@ -18,7 +22,7 @@ export const RadioButton = () => {
             type="radio"
             name="date"
             value={item}
-            onChange={() => setSelectedRadioBtn(item)}
+            onChange={() => onChangeInput(item)}
             checked={isRadioSelected(item)}
           />
           <span>{item}</span>

@@ -1,24 +1,26 @@
+import { useState } from 'react';
+
 import {
   eachDayOfInterval,
   endOfMonth,
   endOfWeek,
   format,
+  getDaysInMonth,
+  isSameMonth,
   parse,
-  startOfMonth,
   startOfToday,
   startOfWeek,
 } from 'date-fns';
 import { weekDays } from 'components/constants/constants.js';
+import clsx from 'clsx';
 
 import styles from './Calendar.module.scss';
-import { useState } from 'react';
 
 export const Calendar = () => {
   const today = startOfToday();
-  const [currentDate, setCurrentDate] = useState(format(today, 'MMM-yyyy'));
+  const [currentDate] = useState(format(today, 'MMM-yyyy'));
   const firstDayCurrentDate = parse(currentDate, 'MMM-yyyy', new Date());
-
-  console.log(currentDate);
+  const [indexDay, setIndexDay] = useState(startOfWeek(firstDayCurrentDate).getDate());
 
   const calendarDays = eachDayOfInterval({
     start: startOfWeek(firstDayCurrentDate),
@@ -27,15 +29,28 @@ export const Calendar = () => {
 
   return (
     <div className={styles.calendar}>
-      <div className={styles.calendarGrid}>
+      <div className={clsx(styles.calendarContainer, styles.container)}>
         <ul className={styles.calendarNames}>
           {weekDays.map((weekDay) => (
-            <li key={weekDay}>{weekDay}</li>
+            <li key={weekDay} className={styles.calendarName}>
+              {weekDay}
+            </li>
           ))}
         </ul>
         <ul className={styles.calendarNumbers}>
           {calendarDays.map((day, dayIdx) => (
-            <li key={dayIdx}>{format(day, 'd')}</li>
+            <li
+              key={dayIdx}
+              className={clsx(
+                styles.calendarNumber,
+                {
+                  [styles.inactive]: !isSameMonth(day, today),
+                },
+                { [styles.active]: dayIdx === indexDay },
+              )}
+              onClick={() => setIndexDay(dayIdx)}>
+              {format(day, 'd')}
+            </li>
           ))}
         </ul>
       </div>

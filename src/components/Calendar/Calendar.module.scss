@@ -1,5 +1,11 @@
+@use 'scss' as *;
+
 .calendar {
-  &Grid {
+  height: 100vh;
+
+  &Container {
+    display: flex;
+    flex-direction: column;
   }
 
   &Names {
@@ -7,9 +13,41 @@
     grid-template-columns: repeat(7, 1fr);
   }
 
+  &Name {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-inline-end: 12px;
+    padding-bottom: 4px;
+  }
+
   &Numbers {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(6, 1fr);
+  }
+
+  &Number {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-top: 2px solid $secondaryColor;
+    padding: 4px 8px 89px;
+    cursor: pointer;
+    margin: 0 4px;
+    transition: background 0.3s ease-in-out;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  .inactive {
+    color: rgba($primaryColor, 0.25);
+  }
+
+  .active {
+    border-color: $activeColor;
+    background: rgba($activeColor, 0.25);
   }
 }
