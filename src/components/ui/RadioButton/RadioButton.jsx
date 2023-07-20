@@ -24,6 +24,7 @@ export const RadioButton = () => {
           <span>{item}</span>
         </label>
       ))}
+      <span className={styles.radioLine}></span>
     </div>
   );
 };
