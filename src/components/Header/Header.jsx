@@ -19,14 +19,14 @@ export const Header = () => {
     <header className={styles.header}>
       <div className={clsx(styles.headerContainer, styles.container)}>
         <Select
-          selectedItem={currentYear}
+          defaultItem={currentYear}
           className={styles.headerSelect}
           isActive={isActiveYears}
           setIsActive={setIsActiveYears}
           items={years}
         />
         <Select
-          selectedItem={currentMonth}
+          defaultItem={currentMonth}
           className={styles.headerSelect}
           isActive={isActiveMonths}
           setIsActive={setIsActiveMonths}
