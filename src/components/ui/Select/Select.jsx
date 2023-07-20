@@ -5,13 +5,14 @@ import clsx from 'clsx';
 import arrow from 'assets/icon/arrow.svg';
 import styles from './Select.module.scss';
 
-export const Select = ({ defaultItem, className, isActive, setIsActive, items }) => {
+export const Select = ({ defaultItem, className, onClickOption, isActive, setIsActive, items }) => {
   const [activeSelect, setActiveSelect] = useState(defaultItem);
   const selectRef = useRef(null);
   useOnClickOutside(selectRef, () => setIsActive(false));
 
   const onClickSelect = (option) => {
     setActiveSelect(option);
+    onClickOption(option);
     setIsActive(false);
   };
 
@@ -23,9 +24,9 @@ export const Select = ({ defaultItem, className, isActive, setIsActive, items })
       </div>
       {isActive && (
         <ul className={styles.selectContent}>
-          {items.map((year) => (
-            <li key={year} className={styles.selectOption} onClick={() => onClickSelect(year)}>
-              {year}
+          {items.map((option) => (
+            <li key={option} className={styles.selectOption} onClick={() => onClickSelect(option)}>
+              {option}
             </li>
           ))}
         </ul>

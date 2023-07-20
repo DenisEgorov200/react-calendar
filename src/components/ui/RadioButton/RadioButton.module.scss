@@ -9,17 +9,6 @@
   color: $primaryColor;
   cursor: pointer;
 
-  &::after {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
-    content: '';
-    width: 1px;
-    height: 100%;
-
-    background: $activeColor;
-  }
-
   &Label {
     display: flex;
     justify-content: center;
@@ -45,6 +34,16 @@
       border-radius: 0 6px 6px 0;
       border-width: 1px 1px 1px 0;
     }
+  }
+
+  &Line {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    content: '';
+    width: 1px;
+    height: 100%;
+    background: $secondaryColor;
   }
 }
 

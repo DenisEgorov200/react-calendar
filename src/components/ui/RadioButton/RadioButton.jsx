@@ -5,12 +5,12 @@ import clsx from 'clsx';
 const radioItems = ['month', 'year'];
 
 export const RadioButton = () => {
-  const [selectedRadioBtn, setSelectedRadioBtn] = useState('month');
+  const [selectedRadioBtn, setSelectedRadioBtn] = useState('');
   const isRadioSelected = (value) => selectedRadioBtn === value;
 
   return (
     <div className={styles.radio}>
-      {radioItems.map((item) => (
+      {radioItems.map((item, index) => (
         <label
           key={item}
           className={clsx(styles.radioLabel, { [styles.active]: isRadioSelected(item) })}>
