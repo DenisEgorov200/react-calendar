@@ -1,0 +1,52 @@
+@use 'scss' as *;
+
+.radio {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 131px;
+  color: $primaryColor;
+  cursor: pointer;
+
+  &::after {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    content: '';
+    width: 1px;
+    height: 100%;
+    background: $secondaryColor;
+  }
+
+  &Label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding: 4px 11px;
+    text-transform: capitalize;
+    border: 1px solid $secondaryColor;
+
+    input[type='radio'] {
+      width: 0;
+      height: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &:first-child {
+      border-radius: 6px 0 0 6px;
+      border-width: 1px 0 1px 1px;
+    }
+
+    &:last-child {
+      border-radius: 0 6px 6px 0;
+      border-width: 1px 1px 1px 0;
+    }
+  }
+}
+
+.active {
+  border-color: $activeColor;
+}
