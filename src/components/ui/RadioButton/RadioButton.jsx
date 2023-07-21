@@ -3,14 +3,8 @@ import clsx from 'clsx';
 
 import styles from './RadioButton.module.scss';
 
-export const RadioButton = ({ radioItems }) => {
-  const [selectedRadioBtn, setSelectedRadioBtn] = useState('');
+export const RadioButton = ({ radioItems, onChangeInput, selectedRadioBtn }) => {
   const isRadioSelected = (value) => selectedRadioBtn === value;
-
-  const onChangeInput = (item) => {
-    setSelectedRadioBtn(item);
-    console.log(item);
-  };
 
   return (
     <div className={styles.radio}>

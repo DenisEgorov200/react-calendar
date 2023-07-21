@@ -1,16 +1,15 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
-import { setSelectByMonth, setSelectByYear } from '@/store/select/selectSlice.js';
 import { months, years } from 'components/constants/constants.js';
 import { Select } from 'components/ui/Select/Select.jsx';
 
 import styles from 'components/Header/Header.module.scss';
 
 export const SelectWrapper = () => {
-  const dispatch = useDispatch();
-  const { currentYear } = useSelector((state) => state.select);
-  const { currentMonth } = useSelector((state) => state.select);
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [currentMonth, setCurrentMonth] = useState(
+    new Date().toLocaleString('default', { month: 'long' }).slice(0, 3),
+  );
 
   const [isActiveYears, setIsActiveYears] = useState(false);
   const [isActiveMonths, setIsActiveMonths] = useState(false);
@@ -20,7 +19,7 @@ export const SelectWrapper = () => {
       <Select
         defaultItem={currentYear}
         className={styles.headerSelect}
-        onClickOption={(option) => dispatch(setSelectByYear(option))}
+        onClickOption={(option) => setCurrentYear(option)}
         isActive={isActiveYears}
         setIsActive={setIsActiveYears}
         items={years}
@@ -28,7 +27,7 @@ export const SelectWrapper = () => {
       <Select
         defaultItem={currentMonth}
         className={styles.headerSelect}
-        onClickOption={(option) => dispatch(setSelectByMonth(option))}
+        onClickOption={(option) => setCurrentMonth(option)}
         isActive={isActiveMonths}
         setIsActive={setIsActiveMonths}
         items={months}

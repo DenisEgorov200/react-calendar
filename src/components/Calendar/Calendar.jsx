@@ -1,18 +1,18 @@
 import { useState } from 'react';
-
 import {
   eachDayOfInterval,
   endOfMonth,
   endOfWeek,
   format,
-  getDaysInMonth,
   isSameMonth,
   parse,
   startOfToday,
   startOfWeek,
 } from 'date-fns';
-import { weekDays } from 'components/constants/constants.js';
 import clsx from 'clsx';
+
+import { weekDays } from 'components/constants/constants.js';
+import { Header } from 'components/Header/Header.jsx';
 
 import styles from './Calendar.module.scss';
 
@@ -20,7 +20,7 @@ export const Calendar = () => {
   const today = startOfToday();
   const [currentDate] = useState(format(today, 'MMM-yyyy'));
   const firstDayCurrentDate = parse(currentDate, 'MMM-yyyy', new Date());
-  const [indexDay, setIndexDay] = useState(startOfWeek(firstDayCurrentDate).getDate());
+  const [indexDay, setIndexDay] = useState(startOfWeek(firstDayCurrentDate).getDate() + 1);
 
   const calendarDays = eachDayOfInterval({
     start: startOfWeek(firstDayCurrentDate),
@@ -29,6 +29,7 @@ export const Calendar = () => {
 
   return (
     <div className={styles.calendar}>
+      <Header />
       <div className={clsx(styles.calendarContainer, styles.container)}>
         <ul className={styles.calendarNames}>
           {weekDays.map((weekDay) => (
