@@ -1,12 +1,6 @@
 @use 'scss' as *;
 
 .calendar {
-  height: 100%;
-
-  &:not(:last-child) {
-    margin: 0 0 70px 0;
-  }
-
   &Container {
     display: flex;
     flex-direction: column;

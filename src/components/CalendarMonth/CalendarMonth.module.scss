@@ -1,0 +1,24 @@
+@use 'scss' as *;
+
+.calendar {
+  &Names {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &Item {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-top: 2px solid $secondaryColor;
+    padding: 4px 8px 89px;
+    cursor: pointer;
+    margin: 0 4px;
+    transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+  }
+}

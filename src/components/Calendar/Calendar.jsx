@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   eachDayOfInterval,
   endOfMonth,
@@ -8,52 +9,25 @@ import {
   parse,
   startOfToday,
   startOfWeek,
+  isToday,
 } from 'date-fns';
 import clsx from 'clsx';
 
-import { weekDays } from 'components/constants/constants.js';
+import { weekDays } from '@/constants/constants.js';
 import { Header } from 'components/Header/Header.jsx';
+import { CalendarDate } from 'components/CalendarDate/CalendarDate.jsx';
+import { CalendarMonth } from 'components/CalendarMonth/CalendarMonth.jsx';
 
 import styles from './Calendar.module.scss';
 
 export const Calendar = () => {
-  const today = startOfToday();
-  const [currentDate] = useState(format(today, 'MMM-yyyy'));
-  const firstDayCurrentDate = parse(currentDate, 'MMM-yyyy', new Date());
-  const [indexDay, setIndexDay] = useState(startOfWeek(firstDayCurrentDate).getDate() + 1);
-
-  const calendarDays = eachDayOfInterval({
-    start: startOfWeek(firstDayCurrentDate),
-    end: endOfWeek(endOfMonth(firstDayCurrentDate)),
-  });
+  const { isSelectYear } = useSelector((state) => state.select);
 
   return (
     <div className={styles.calendar}>
       <Header />
       <div className={clsx(styles.calendarContainer, styles.container)}>
-        <ul className={styles.calendarNames}>
-          {weekDays.map((weekDay) => (
-            <li key={weekDay} className={styles.calendarName}>
-              {weekDay}
-            </li>
-          ))}
-        </ul>
-        <ul className={styles.calendarNumbers}>
-          {calendarDays.map((day, dayIdx) => (
-            <li
-              key={dayIdx}
-              className={clsx(
-                styles.calendarNumber,
-                {
-                  [styles.inactive]: !isSameMonth(day, today),
-                },
-                { [styles.active]: dayIdx === indexDay },
-              )}
-              onClick={() => setIndexDay(dayIdx)}>
-              {format(day, 'd')}
-            </li>
-          ))}
-        </ul>
+        {!isSelectYear ? <CalendarDate /> : <CalendarMonth />}
       </div>
     </div>
   );
