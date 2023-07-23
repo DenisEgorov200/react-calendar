@@ -18,14 +18,16 @@ import styles from './CalendarDate.module.scss';
 
 export const CalendarDate = () => {
   const today = startOfToday();
-  const [currentDate, setCurrentDate] = useState(format(today, 'MMM-yyyy'));
+  const [currentDate] = useState(format(today, 'MMM-yyyy'));
   const firstDayCurrentDate = parse(currentDate, 'MMM-yyyy', new Date());
-  const [selectedDay, setSelectedDay] = useState(startOfWeek(firstDayCurrentDate).getDate());
+  const [selectedDay, setSelectedDay] = useState();
 
   const calendarDays = eachDayOfInterval({
     start: startOfWeek(firstDayCurrentDate),
     end: endOfWeek(endOfMonth(firstDayCurrentDate)),
   });
+
+  console.log(selectedDay);
 
   return (
     <>

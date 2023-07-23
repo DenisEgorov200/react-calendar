@@ -22,3 +22,16 @@
     }
   }
 }
+
+.inactive {
+  color: rgba($primaryColor, 0.25);
+}
+
+.active {
+  background: rgba($activeColor, 0.15);
+}
+
+.today {
+  border-color: $activeColor;
+  background: rgba($activeColor, 0.25);
+}

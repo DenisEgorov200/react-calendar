@@ -39,17 +39,17 @@
       background: rgba(0, 0, 0, 0.04);
     }
   }
+}
 
-  .inactive {
-    color: rgba($primaryColor, 0.25);
-  }
+.inactive {
+  color: rgba($primaryColor, 0.25);
+}
 
-  .active {
-    background: rgba($activeColor, 0.15);
-  }
+.active {
+  background: rgba($activeColor, 0.15);
+}
 
-  .today {
-    border-color: $activeColor;
-    background: rgba($activeColor, 0.25);
-  }
+.today {
+  border-color: $activeColor;
+  background: rgba($activeColor, 0.25);
 }

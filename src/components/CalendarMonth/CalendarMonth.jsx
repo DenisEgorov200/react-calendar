@@ -1,34 +1,31 @@
 import { useState } from 'react';
-import {
-  eachDayOfInterval,
-  endOfMonth,
-  endOfWeek,
-  format,
-  parse,
-  startOfToday,
-  startOfWeek,
-} from 'date-fns';
-
+import { format, getMonth, parse, startOfToday, startOfWeek } from 'date-fns';
 import clsx from 'clsx';
-import styles from './CalendarMonth.module.scss';
+
 import { months } from '@/constants/constants.js';
+
+import styles from './CalendarMonth.module.scss';
 
 export const CalendarMonth = () => {
   const today = startOfToday();
-  const [currentDate, setCurrentDate] = useState(format(today, 'MMM-yyyy'));
+  const [currentDate] = useState(format(today, 'MMM-yyyy'));
   const firstDayCurrentDate = parse(currentDate, 'MMM-yyyy', new Date());
-  const [selectedDay, setSelectedDay] = useState(startOfWeek(firstDayCurrentDate).getDate());
+  const [selectedMonth, setSelectedMonth] = useState(startOfWeek(firstDayCurrentDate).getDate());
 
-  const calendarDays = eachDayOfInterval({
-    start: startOfWeek(firstDayCurrentDate),
-    end: endOfWeek(endOfMonth(firstDayCurrentDate)),
-  });
+  console.log(selectedMonth);
 
   return (
     <ul className={styles.calendarNames}>
-      {months.map((weekDay) => (
-        <li key={weekDay} className={styles.calendarItem}>
-          {weekDay}
+      {months.map((month, monthIdx) => (
+        <li
+          key={month}
+          className={clsx(
+            styles.calendarItem,
+            { [styles.active]: monthIdx === selectedMonth },
+            { [styles.today]: today.getMonth() === monthIdx },
+          )}
+          onClick={() => setSelectedMonth(monthIdx)}>
+          {month}
         </li>
       ))}
     </ul>
