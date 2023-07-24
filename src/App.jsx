@@ -1,11 +1,11 @@
-import { Calendar } from 'components/Calendar/Calendar.jsx';
+import { AppRouter } from '@/router/AppRouter.jsx';
 
 import styles from './App.module.scss';
 
 function App() {
   return (
     <div className={styles.wrapper}>
-      <Calendar />
+      <AppRouter />
     </div>
   );
 }
