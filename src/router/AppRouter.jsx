@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Home } from 'pages/Home.jsx';
-import { Task } from 'pages/Task.jsx';
+import { Task } from 'pages/Task/Task.jsx';
 
 const router = createBrowserRouter([
   {

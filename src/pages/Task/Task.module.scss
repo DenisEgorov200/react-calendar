@@ -1,0 +1,13 @@
+@use 'scss' as *;
+
+.task {
+  height: 100vh;
+  padding: 10px;
+
+  &Container {
+    height: 100%;
+    padding: 20px;
+    background: $secondaryColor;
+    border-radius: 5px;
+  }
+}

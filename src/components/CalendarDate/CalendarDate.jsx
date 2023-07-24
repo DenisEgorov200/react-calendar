@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   eachDayOfInterval,
   endOfMonth,
@@ -17,7 +18,6 @@ import { setSelectedDay } from '@/store/select/selectSlice.js';
 import { weekDays } from '@/constants/constants.js';
 
 import styles from './CalendarDate.module.scss';
-import { useNavigate } from 'react-router-dom';
 
 export const CalendarDate = () => {
   const dispatch = useDispatch();
@@ -62,7 +62,9 @@ export const CalendarDate = () => {
               { [styles.today]: isToday(day) },
             )}
             onClick={() => onClickDay(dayIdx)}
-            onDoubleClick={() => navigate(`/task/${dayIdx}`)}>
+            onDoubleClick={() =>
+              navigate(`/task/${format(day, 'y')}-${format(day, 'M')}-${format(day, 'd')}`)
+            }>
             {format(day, 'd')}
           </li>
         ))}
