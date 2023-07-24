@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   eachDayOfInterval,
   endOfMonth,
@@ -12,22 +13,30 @@ import {
 } from 'date-fns';
 import clsx from 'clsx';
 
+import { setSelectedItem } from '@/store/select/selectSlice.js';
 import { weekDays } from '@/constants/constants.js';
 
 import styles from './CalendarDate.module.scss';
 
 export const CalendarDate = () => {
+  const dispatch = useDispatch();
   const today = startOfToday();
-  const [currentDate] = useState(format(today, 'MMM-yyyy'));
+  const [currentDate, setCurrentDate] = useState(format(today, 'MMM-yyyy'));
+  const { selectedMonth, selectedYear } = useSelector((state) => state.select);
   const firstDayCurrentDate = parse(currentDate, 'MMM-yyyy', new Date());
-  const [selectedDay, setSelectedDay] = useState();
 
   const calendarDays = eachDayOfInterval({
     start: startOfWeek(firstDayCurrentDate),
     end: endOfWeek(endOfMonth(firstDayCurrentDate)),
   });
 
-  console.log(selectedDay);
+  const onClickDay = (day) => {
+    dispatch(setSelectedItem(day));
+  };
+
+  useEffect(() => {
+    setCurrentDate(`${selectedMonth}-${selectedYear}`);
+  }, [selectedMonth, selectedYear]);
 
   return (
     <>
@@ -45,12 +54,12 @@ export const CalendarDate = () => {
             className={clsx(
               styles.calendarNumber,
               {
-                [styles.inactive]: !isSameMonth(day, today),
+                [styles.inactive]: !isSameMonth(day, firstDayCurrentDate),
               },
-              { [styles.active]: dayIdx === selectedDay },
+              // { [styles.active]: day === selectedDate },
               { [styles.today]: isToday(day) },
             )}
-            onClick={() => setSelectedDay(dayIdx)}>
+            onClick={() => onClickDay(day)}>
             {format(day, 'd')}
           </li>
         ))}

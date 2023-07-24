@@ -6,8 +6,6 @@ function App() {
   return (
     <div className={styles.wrapper}>
       <Calendar />
-      <Calendar />
-      <Calendar />
     </div>
   );
 }

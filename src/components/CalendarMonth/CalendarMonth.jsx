@@ -1,18 +1,20 @@
-import { useState } from 'react';
-import { format, getMonth, parse, startOfToday, startOfWeek } from 'date-fns';
+import { useDispatch, useSelector } from 'react-redux';
+import { startOfToday } from 'date-fns';
 import clsx from 'clsx';
 
+import { setSelectedMonth } from '@/store/select/selectSlice.js';
 import { months } from '@/constants/constants.js';
 
 import styles from './CalendarMonth.module.scss';
 
 export const CalendarMonth = () => {
+  const dispatch = useDispatch();
+  const { selectedMonth } = useSelector((state) => state.select);
   const today = startOfToday();
-  const [currentDate] = useState(format(today, 'MMM-yyyy'));
-  const firstDayCurrentDate = parse(currentDate, 'MMM-yyyy', new Date());
-  const [selectedMonth, setSelectedMonth] = useState(startOfWeek(firstDayCurrentDate).getDate());
 
-  console.log(selectedMonth);
+  const onClickMonth = (month) => {
+    dispatch(setSelectedMonth(month));
+  };
 
   return (
     <ul className={styles.calendarNames}>
@@ -21,10 +23,10 @@ export const CalendarMonth = () => {
           key={month}
           className={clsx(
             styles.calendarItem,
-            { [styles.active]: monthIdx === selectedMonth },
+            { [styles.active]: month === selectedMonth },
             { [styles.today]: today.getMonth() === monthIdx },
           )}
-          onClick={() => setSelectedMonth(monthIdx)}>
+          onClick={() => onClickMonth(month)}>
           {month}
         </li>
       ))}
