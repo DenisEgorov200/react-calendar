@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { Button } from 'components/ui/Button/Button.jsx';
 
 import styles from './Task.module.scss';
+import { Modal } from 'components/ui/Modal/Modal.jsx';
 
 export const Task = () => {
   return (
