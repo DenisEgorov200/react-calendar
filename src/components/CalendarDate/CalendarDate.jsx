@@ -17,9 +17,11 @@ import { setSelectedDay } from '@/store/select/selectSlice.js';
 import { weekDays } from '@/constants/constants.js';
 
 import styles from './CalendarDate.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 export const CalendarDate = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const today = startOfToday();
   const [currentDate, setCurrentDate] = useState(format(today, 'MMM-yyyy'));
   const { selectedYear, selectedMonth, selectedDay } = useSelector((state) => state.select);
@@ -59,7 +61,8 @@ export const CalendarDate = () => {
               { [styles.active]: dayIdx === selectedDay },
               { [styles.today]: isToday(day) },
             )}
-            onClick={() => onClickDay(dayIdx)}>
+            onClick={() => onClickDay(dayIdx)}
+            onDoubleClick={() => navigate(`/task/${dayIdx}`)}>
             {format(day, 'd')}
           </li>
         ))}
