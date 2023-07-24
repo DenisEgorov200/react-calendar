@@ -13,7 +13,7 @@ import {
 } from 'date-fns';
 import clsx from 'clsx';
 
-import { setSelectedItem } from '@/store/select/selectSlice.js';
+import { setSelectedDay } from '@/store/select/selectSlice.js';
 import { weekDays } from '@/constants/constants.js';
 
 import styles from './CalendarDate.module.scss';
@@ -22,7 +22,7 @@ export const CalendarDate = () => {
   const dispatch = useDispatch();
   const today = startOfToday();
   const [currentDate, setCurrentDate] = useState(format(today, 'MMM-yyyy'));
-  const { selectedMonth, selectedYear } = useSelector((state) => state.select);
+  const { selectedYear, selectedMonth, selectedDay } = useSelector((state) => state.select);
   const firstDayCurrentDate = parse(currentDate, 'MMM-yyyy', new Date());
 
   const calendarDays = eachDayOfInterval({
@@ -31,7 +31,7 @@ export const CalendarDate = () => {
   });
 
   const onClickDay = (day) => {
-    dispatch(setSelectedItem(day));
+    dispatch(setSelectedDay(day));
   };
 
   useEffect(() => {
@@ -56,10 +56,10 @@ export const CalendarDate = () => {
               {
                 [styles.inactive]: !isSameMonth(day, firstDayCurrentDate),
               },
-              // { [styles.active]: day === selectedDate },
+              { [styles.active]: dayIdx === selectedDay },
               { [styles.today]: isToday(day) },
             )}
-            onClick={() => onClickDay(day)}>
+            onClick={() => onClickDay(dayIdx)}>
             {format(day, 'd')}
           </li>
         ))}
