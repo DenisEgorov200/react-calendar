@@ -49,6 +49,10 @@
   background: rgba($activeColor, 0.15);
 }
 
+.active ~ .today {
+  background: transparent;
+}
+
 .today {
   border-color: $activeColor;
   background: rgba($activeColor, 0.25);
