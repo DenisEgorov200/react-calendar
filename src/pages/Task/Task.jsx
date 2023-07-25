@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { getTodos } from '@/services/todosService.js';
 import { format } from 'date-fns';
 import clsx from 'clsx';
 
-import { addTask } from '@/store/task/taskSlice.js';
 import { Modal } from 'components/ui/Modal/Modal.jsx';
 import { Button } from 'components/ui/Button/Button.jsx';
 import { Input } from 'components/ui/Input/Input.jsx';
@@ -12,15 +12,24 @@ import time from 'assets/icon/time.svg';
 import styles from './Task.module.scss';
 
 export const Task = () => {
-  const dispatch = useDispatch();
+  const { taskId } = useParams();
+  const [todos, setTodos] = useState([]);
   const [active, setActive] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
   const onClickAddTask = () => {
-    dispatch(addTask(inputValue));
     setActive(false);
     setInputValue('');
   };
+
+  useEffect(() => {
+    const fetchTodos = async () => {
+      const todosData = await getTodos(taskId);
+      setTodos(todosData);
+    };
+
+    fetchTodos();
+  }, []);
 
   return (
     <div className={styles.task}>
@@ -29,7 +38,11 @@ export const Task = () => {
           + New account
         </Button>
         <ul className={styles.taskList}>
-          <li className={styles.taskItem}></li>
+          {todos.map((todo) => (
+            <li key={todo.id} className={styles.taskItem}>
+              {todo.date}
+            </li>
+          ))}
         </ul>
       </div>
       <Modal active={active} setActive={setActive} className={styles.taskModal}>

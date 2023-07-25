@@ -63,7 +63,7 @@ export const CalendarDate = () => {
             )}
             onClick={() => onClickDay(dayIdx)}
             onDoubleClick={() =>
-              navigate(`/task/${format(day, 'y')}-${format(day, 'M')}-${format(day, 'd')}`)
+              navigate(`/task/${format(day, 'y')}-${format(day, 'MM')}-${format(day, 'dd')}`)
             }>
             {format(day, 'd')}
           </li>
