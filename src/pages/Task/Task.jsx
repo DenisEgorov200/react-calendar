@@ -1,13 +1,26 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { format } from 'date-fns';
 import clsx from 'clsx';
 
+import { addTask } from '@/store/task/taskSlice.js';
 import { Modal } from 'components/ui/Modal/Modal.jsx';
 import { Button } from 'components/ui/Button/Button.jsx';
+import { Input } from 'components/ui/Input/Input.jsx';
 
+import time from 'assets/icon/time.svg';
 import styles from './Task.module.scss';
 
 export const Task = () => {
+  const dispatch = useDispatch();
   const [active, setActive] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+  const onClickAddTask = () => {
+    dispatch(addTask(inputValue));
+    setActive(false);
+    setInputValue('');
+  };
 
   return (
     <div className={styles.task}>
@@ -21,14 +34,25 @@ export const Task = () => {
       </div>
       <Modal active={active} setActive={setActive} className={styles.taskModal}>
         <div className={styles.taskHeader}>
-          <input type="text" className={styles.taskInput} placeholder={'Новая задача'} />
+          <Input
+            type="text"
+            placeholder={'Новая задача'}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
         </div>
         <div className={styles.taskBody}>
-          <input type="time" className={styles.taskInput} />
-          <input type="time" className={styles.taskInput} />
+          <div className={styles.taskInputWrapper}>
+            <Input type="time" className={styles.taskInput} value={format(new Date(), 'HH:mm')} />
+            <img className={styles.taskImg} src={time} alt="time" />
+          </div>
+          <div className={styles.taskInputWrapper}>
+            <Input type="time" className={styles.taskInput} value={format(new Date(), 'HH:mm')} />
+            <img className={styles.taskImg} src={time} alt="time" />
+          </div>
         </div>
         <div className={styles.taskFooter}>
-          <Button>Add task</Button>
+          <Button onClick={onClickAddTask}>Add task</Button>
         </div>
       </Modal>
     </div>

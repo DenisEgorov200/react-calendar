@@ -1,0 +1,8 @@
+@use 'scss' as *;
+
+.input {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid $greyColor;
+  color: $primaryColor;
+}
