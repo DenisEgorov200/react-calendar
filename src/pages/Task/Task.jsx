@@ -18,8 +18,14 @@ export const Task = () => {
   const todoId = uuidv4();
   const [active, setActive] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [timeRange, setTimeRange] = useState({
+    startTime: format(new Date(), 'HH:mm'),
+    endTime: format(new Date(), 'HH:mm'),
+  });
 
-  const { data: todos } = useQuery({
+  console.log(timeRange);
+
+  const { data: todos, isLoading } = useQuery({
     queryFn: () => getTodos(date),
     queryKey: ['todos', 'all'],
   });
@@ -30,6 +36,20 @@ export const Task = () => {
     setInputValue('');
   };
 
+  const handleStartTimeChange = (event) => {
+    setTimeRange((prevTimeRange) => ({
+      ...prevTimeRange,
+      startTime: event.target.value,
+    }));
+  };
+
+  const handleEndTimeChange = (event) => {
+    setTimeRange((prevTimeRange) => ({
+      ...prevTimeRange,
+      endTime: event.target.value,
+    }));
+  };
+
   return (
     <div className={styles.task}>
       <div className={clsx(styles.taskContainer, styles.container)}>
@@ -37,6 +57,7 @@ export const Task = () => {
           + New account
         </Button>
         <ul className={styles.taskList}>
+          {isLoading && <span>loading</span>}
           {todos?.map((todo) => (
             <li key={todo.id} className={styles.taskItem}>
               {todo.title}
@@ -55,11 +76,21 @@ export const Task = () => {
         </div>
         <div className={styles.taskBody}>
           <div className={styles.taskInputWrapper}>
-            <Input type="time" className={styles.taskInput} value={format(new Date(), 'HH:mm')} />
+            <Input
+              type="time"
+              className={styles.taskInput}
+              value={timeRange.startTime}
+              onChange={handleStartTimeChange}
+            />
             <img className={styles.taskImg} src={time} alt="time" />
           </div>
           <div className={styles.taskInputWrapper}>
-            <Input type="time" className={styles.taskInput} value={format(new Date(), 'HH:mm')} />
+            <Input
+              type="time"
+              className={styles.taskInput}
+              value={timeRange.endTime}
+              onChange={handleEndTimeChange}
+            />
             <img className={styles.taskImg} src={time} alt="time" />
           </div>
         </div>
