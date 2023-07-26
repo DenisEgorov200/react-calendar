@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { getTodos } from '@/services/todosService.js';
+import { addTodo, getTodos } from '@/services/todosService.js';
 import { format } from 'date-fns';
 import clsx from 'clsx';
 
@@ -17,7 +18,13 @@ export const Task = () => {
   const [active, setActive] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
+  const { data, isLoading, isSuccess } = useQuery({
+    queryFn: () => getTodos('all'),
+    queryKey: ['games', 'all'],
+  });
+
   const onClickAddTask = () => {
+    addTodo(taskId);
     setActive(false);
     setInputValue('');
   };
@@ -38,7 +45,7 @@ export const Task = () => {
           + New account
         </Button>
         <ul className={styles.taskList}>
-          {todos.map((todo) => (
+          {todos?.map((todo) => (
             <li key={todo.id} className={styles.taskItem}>
               {todo.date}
             </li>
