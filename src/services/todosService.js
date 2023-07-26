@@ -15,14 +15,14 @@ export const getTodos = async (option) => {
   }
 };
 
-export const addTodo = async (id) => {
-  const newTodo = { id: 5, date: id, title: 'learn react for 4 hour', completed: false };
+export const addTodo = async (id, date, title, completed) => {
+  const newTodo = { id, date, title, completed };
 
   try {
     const todos = await ky
       .post('todos', {
         prefixUrl: 'http://localhost:3000/',
-        searchParams: `todos=${id}`,
+        json: newTodo,
       })
       .json();
 

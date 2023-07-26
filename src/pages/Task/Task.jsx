@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { addTodo, getTodos } from '@/services/todosService.js';
+import { v4 as uuidv4 } from 'uuid';
 import { format } from 'date-fns';
 import clsx from 'clsx';
 
@@ -13,30 +14,21 @@ import time from 'assets/icon/time.svg';
 import styles from './Task.module.scss';
 
 export const Task = () => {
-  const { taskId } = useParams();
-  const [todos, setTodos] = useState([]);
+  const { date } = useParams();
+  const todoId = uuidv4();
   const [active, setActive] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
-  const { data, isLoading, isSuccess } = useQuery({
-    queryFn: () => getTodos('all'),
-    queryKey: ['games', 'all'],
+  const { data: todos } = useQuery({
+    queryFn: () => getTodos(date),
+    queryKey: ['todos', 'all'],
   });
 
   const onClickAddTask = () => {
-    addTodo(taskId);
+    addTodo(todoId, date, inputValue, false);
     setActive(false);
     setInputValue('');
   };
-
-  useEffect(() => {
-    const fetchTodos = async () => {
-      const todosData = await getTodos(taskId);
-      setTodos(todosData);
-    };
-
-    fetchTodos();
-  }, []);
 
   return (
     <div className={styles.task}>
@@ -47,7 +39,7 @@ export const Task = () => {
         <ul className={styles.taskList}>
           {todos?.map((todo) => (
             <li key={todo.id} className={styles.taskItem}>
-              {todo.date}
+              {todo.title}
             </li>
           ))}
         </ul>

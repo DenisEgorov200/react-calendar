@@ -9,7 +9,7 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: '/task/:taskId',
+    path: '/task/:date',
     element: <Task />,
   },
 ]);
